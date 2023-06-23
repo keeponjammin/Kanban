@@ -89,8 +89,20 @@ namespace Kanban.Controllers
           {
               return Problem("Entity set 'KanbanDbContext.Users'  is null.");
           }
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+
+            var existingUser = _context.Users
+                  .Where(u => u.UserName == user.UserName
+                  && u.UserEmail == user.UserEmail)
+                  .FirstOrDefault();
+            if (existingUser == null)
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                user = existingUser;
+            }
 
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
