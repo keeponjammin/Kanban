@@ -32,7 +32,7 @@ export default function Login() {
                 .post(values)
                 .then(response => {
 
-                    setContext({ userId: response.data.userId})
+                    setContext({ userId: response.data.userId, userName: response.data.userName})
                     navigate('/boardselect')
                 })
                 .catch(error => console.log(error))
