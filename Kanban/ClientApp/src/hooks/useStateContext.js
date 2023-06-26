@@ -1,14 +1,19 @@
-import React, {createContext, useContext, useState} from 'react'
+import React, {createContext, useContext, useEffect, useState} from 'react'
 
 
 export const stateContext = createContext();
 
 const getFreshContext =()=>{
-    return {
-        userId:0,
-        //userName:'',
-        selectedBoardIndex: 0,
+    if(localStorage.getItem('context') === null){
+        localStorage.setItem('context', JSON.stringify({
+            userId:-1,
+            userName:'',
+            selectedBoardIndex: -1,
+            boards: [],
+            popup: false,
+        }))  
     }
+    return JSON.parse(localStorage.getItem('context'))
 }
 
 export default function useStateContext() {
@@ -21,6 +26,11 @@ export default function useStateContext() {
 
 export function ContextProvider({children}) {
     const [context, setContext] = useState(getFreshContext())
+
+    useEffect(()=>{
+        localStorage.setItem('context', JSON.stringify(context))
+    },[context])
+
   return (
     <stateContext.Provider value={{context, setContext}}>
         {children}
