@@ -5,6 +5,7 @@ import useForm from '../hooks/userForm'
 import { ENDPOINTS, createAPIEndpoint } from '../api'
 import header from '../images/header.jpg'
 import useStateContext from '../hooks/useStateContext'
+import { useNavigate } from 'react-router-dom'
 
 const getFreshModel = ()=>({
     userName: '',
@@ -14,6 +15,7 @@ const getFreshModel = ()=>({
 export default function Login() {
     
     const {context, setContext} = useStateContext();
+    const navigate = useNavigate();
 
     const {
         values,
@@ -31,7 +33,7 @@ export default function Login() {
                 .then(response => {
 
                     setContext({ userId: response.data.userId})
-                    console.log(context)
+                    navigate('/boardselect')
                 })
                 .catch(error => console.log(error))
     }
@@ -49,7 +51,7 @@ export default function Login() {
             <Card sx={{width: '400px'}}>
             <CardMedia
                 component="img"
-                height="194"
+                height="200"
                 image= {header}
                 alt="Paella dish"
             />
