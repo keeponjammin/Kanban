@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useStateContext from '../../hooks/useStateContext'
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,18 +11,36 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, CardHeader } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
+import EmptyBox from '../EmptyBox';
+
 
 
 export default function OverviewGrid() {
     const {context, setContext} = useStateContext();
     const navigate = useNavigate();
 
+    function removeBoard(index){
+      createAPIEndpoint(ENDPOINTS.boards)
+        .delete(index)
+        .then(response => {
+            setContext({ 
+                boards : context.boards.filter(x => x.boardId !== index),
+            })
+        })
+        .catch(error => console.log(error))
+    }
+
+    function openBoard(index){
+      console.log(index)
+      setContext({selectedBoardIndex: index,})
+      navigate('/board')
+    }
+
     useEffect(() =>{
       createAPIEndpoint(ENDPOINTS.boards)
       .fetch()
       .then(response =>{
         setContext({boards: response.data})
-
       })
       .catch(error =>{console.log(error);})
     }, []);
@@ -45,7 +63,7 @@ export default function OverviewGrid() {
               <CardHeader
                   avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="User">
-                      {boardProperties.boardCreatedBy.substring(0,1).toUpperCase()}
+                      {boardProperties.boardCreatedBy?.substring(0,1)?.toUpperCase() ?? ''}
                   </Avatar>
                   }
                   title={boardProperties.boardTitle}
@@ -57,8 +75,8 @@ export default function OverviewGrid() {
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
-              <Button size="small">Open</Button>
-              <IconButton aria-label="Delete forever">
+              <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
+              <IconButton aria-label="Delete forever" onClick={() => removeBoard(boardProperties.boardId)}>
                 <DeleteForeverIcon />
               </IconButton>
             </CardActions>
@@ -67,7 +85,7 @@ export default function OverviewGrid() {
           ))}
 
       </Grid>
-
-      : null
+      :
+      <EmptyBox/>
     )
 }

@@ -1,7 +1,6 @@
-import { Box, Button, Card, TextField } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import React from 'react'
 import useStateContext from '../../hooks/useStateContext';
-import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/userForm';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +14,6 @@ const getFreshModel = ()=>({
 export default function CreateBoardForm() {
 
     const {context, setContext} = useStateContext();
-    const navigate = useNavigate();
 
     const {
         values,
@@ -27,17 +25,14 @@ export default function CreateBoardForm() {
     const addBoard = e => {
         e.preventDefault();
         if (validate()){
-            values.boardCreatedBy = context.userName
-            console.log(values)
+            values.boardCreatedBy = context.userName ?? ''
             createAPIEndpoint(ENDPOINTS.boards)
                 .post(values)
                 .then(response => {
-                    console.log(context)
                     setContext({ 
                         popup: false,
                         boards : [...context.boards, response.data],
                     })
-                    navigate('/boardoverview')
                 })
                 .catch(error => console.log(error))
         }
@@ -51,7 +46,7 @@ export default function CreateBoardForm() {
     }
 
   return (
-    <><div>name:{context.userName}</div><Box sx={{
+    <Box sx={{
           '& .MuiTextField-root': {
               margin: 1,
               width: '100%'
@@ -84,6 +79,6 @@ export default function CreateBoardForm() {
                   Add Board
               </Button>
           </form>
-      </Box></>
+      </Box>
   )
 }
