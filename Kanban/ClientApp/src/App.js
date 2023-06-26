@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import BoardSelect from "./components/BoardSelect";
+import Overview from "./components/BoardOverview/Overview";
 import Board from "./components/Board";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>} />
-                <Route path="/boardselect" element={<BoardSelect/>} />
+                <Route path="/boardoverview" element={<Overview/>} />
                 <Route path="/board" element={<Board/>} />
             </Routes>
         </BrowserRouter>

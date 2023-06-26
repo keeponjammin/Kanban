@@ -9,6 +9,8 @@ const getFreshContext =()=>{
             userId:-1,
             userName:'',
             selectedBoardIndex: -1,
+            boards: [],
+            popup: false,
         }))  
     }
     return JSON.parse(localStorage.getItem('context'))

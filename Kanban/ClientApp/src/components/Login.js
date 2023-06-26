@@ -19,7 +19,6 @@ export default function Login() {
 
     const {
         values,
-        //setValues,
         errors,
         setErrors,
         handleInputChange
@@ -33,7 +32,7 @@ export default function Login() {
                 .then(response => {
 
                     setContext({ userId: response.data.userId, userName: response.data.userName})
-                    navigate('/boardselect')
+                    navigate('/boardoverview')
                 })
                 .catch(error => console.log(error))
     }
@@ -53,7 +52,7 @@ export default function Login() {
                 component="img"
                 height="200"
                 image= {header}
-                alt="Paella dish"
+                alt="Kanban header image"
             />
                 <CardContent sx={{textAlign: 'center'}}>
                     <Typography variant="h3"
