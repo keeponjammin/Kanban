@@ -10,6 +10,9 @@ namespace Kanban.Models
         [Key] 
         public int SectionId { get; set; }
 
+        [Required]
+        public int BoardId { get; set; } 
+
         public int SectionOrderIndex { get; set; }
 
         public int SectionCreatedById { get; set; }
@@ -19,5 +22,6 @@ namespace Kanban.Models
 
         [Column(TypeName = "nvarchar(250)")]
         public string? SectionDescription { get; set; }
+
     }
 }

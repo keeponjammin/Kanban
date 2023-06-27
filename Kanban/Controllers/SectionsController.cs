@@ -85,15 +85,40 @@ namespace Kanban.Controllers
         [HttpPost]
         public async Task<ActionResult<Section>> PostSection(Section section)
         {
-          if (_context.Sections == null)
-          {
-              return Problem("Entity set 'KanbanDbContext.Sections'  is null.");
-          }
-            _context.Sections.Add(section);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSection", new { id = section.SectionId }, section);
+        if (_context.Sections == null)
+        {
+            return Problem("Entity set 'KanbanDbContext.Sections'  is null.");
         }
+        else
+        {
+            _context.Sections.Add(section);
+        }
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("GetSection", new { id = section.SectionId }, section);
+        }
+
+        //POST: api/InitialSections
+        [HttpPost("{id}")]
+        public async Task<ActionResult<Section>> PostInitialSection(int id)
+        {
+            if (_context.Sections == null)
+            {
+                return Problem("Entity set 'KanbanDbContext.Sections'  is null.");
+            }
+            else
+            {
+                InitialSection initialSection = new();
+                List<Section> sections = initialSection.GetInitialSections(id);
+                foreach(Section section in sections)
+                {
+                    _context.Sections.Add(section);
+                }
+            }
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
 
         // DELETE: api/Sections/5
         [HttpDelete("{id}")]
