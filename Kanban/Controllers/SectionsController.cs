@@ -100,7 +100,7 @@ namespace Kanban.Controllers
 
         //POST: api/InitialSections
         [HttpPost("{id}")]
-        public async Task<ActionResult<Section>> PostInitialSection(int id)
+        public async Task<ActionResult<Section>> PostSection(int id)
         {
             if (_context.Sections == null)
             {

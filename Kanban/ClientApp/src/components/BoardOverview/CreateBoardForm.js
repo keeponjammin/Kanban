@@ -29,6 +29,11 @@ export default function CreateBoardForm() {
             createAPIEndpoint(ENDPOINTS.boards)
                 .post(values)
                 .then(response => {
+                    if(response.data.boardId !== null){
+                        createAPIEndpoint(ENDPOINTS.sections)
+                        .postById(response.data.boardId)
+                        .catch(error => console.log(error))
+                    }
                     setContext({ 
                         popup: false,
                         boards : [...context.boards, response.data],
