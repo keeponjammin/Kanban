@@ -39,14 +39,15 @@ namespace Kanban.Controllers
           {
               return NotFound();
           }
-            var boardData = await _context.BoardData.FindAsync(id);
+            //var boardData = await _context.BoardData.FindAsync(id);
+            var boardData = await _context.BoardData.Where(x => x.BoardId == id).ToListAsync();
 
-            if (boardData == null)
+            if (boardData == null || boardData?.Count != 1)
             {
                 return NotFound();
             }
 
-            return boardData;
+            return boardData.FirstOrDefault();
         }
 
         // PUT: api/BoardDatas/5

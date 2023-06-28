@@ -8,6 +8,7 @@ namespace Kanban.Models
         [Key]
         public int BoardDataId { get; set; }
 
+        [Column]
         public int BoardId { get; set; }
 
         [Column]

@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { Suspense} from 'react'
 import useStateContext from '../../hooks/useStateContext';
-import Kanban from './Kanban';
 import { Box, Typography } from '@mui/material';
 import DialogActionButton from '../DialogActionButton';
 import ReturnButton from './ReturnButton';
 
 export default function Board() {
 
-  const {context, setContext} = useStateContext();
+  const {context} = useStateContext();
+  const Kanban = React.lazy(() => import('./Kanban'));
+
+
   const actionButtonProps = {
     // form : <CreateBoardForm/>,
     title: 'Save',
@@ -27,7 +29,9 @@ export default function Board() {
           Board {context.selectedBoardIndex}
         </Box>
       </Typography>
-      <Kanban/>
+      <Suspense fallback={<p>loading...</p>}>
+        <Kanban/>
+      </Suspense>
       <DialogActionButton props = {actionButtonProps} />
     </>
   )

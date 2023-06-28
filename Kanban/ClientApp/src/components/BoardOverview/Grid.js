@@ -36,7 +36,6 @@ export default function OverviewGrid() {
     }
 
     useEffect(() =>{
-      setContext({selectedBoardIndex: -1})
       createAPIEndpoint(ENDPOINTS.boards)
       .fetch()
       .then(response =>{

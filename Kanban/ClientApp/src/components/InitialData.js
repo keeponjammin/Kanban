@@ -1,6 +1,6 @@
-const mockData = [
+const InitialData = [
     {
-        id: '1section',
+        id: '1',
         title: 'Backlogs',
         tasks: [
             {
@@ -18,29 +18,23 @@ const mockData = [
         ]
     },
     {
-        id: '2section',
+        id: '2',
         title: 'Planned',
         tasks: [
-            {
-                id: '5',
-                title: 'Learn CSS'
-            },
-            {
-                id: '6',
-                title: 'Learn Golang'
-            }
         ]
     },
     {
-        id: '3section',
-        title: ' In Progress',
+        id: '3',
+        title: 'In Progress',
         tasks: [
-            {
-                id: '7',
-                title: 'Learn HTML'
-            }
+        ]
+    },
+    {
+        id: '4',
+        title: 'Completed',
+        tasks: [
         ]
     },
 ]
 
-export default mockData
+export default InitialData
