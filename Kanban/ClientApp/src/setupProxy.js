@@ -8,8 +8,7 @@ const context = [
     "/swagger",
     "/api/Users",
     "/api/Boards",
-    "/api/Sections",
-    "/api/Cards",
+    "/api/BoardDatas"
 ];
 
 const onError = (err, req, resp, target) => {

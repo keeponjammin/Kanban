@@ -11,55 +11,55 @@ namespace Kanban.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CardsController : ControllerBase
+    public class BoardDatasController : ControllerBase
     {
         private readonly KanbanDbContext _context;
 
-        public CardsController(KanbanDbContext context)
+        public BoardDatasController(KanbanDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cards
+        // GET: api/BoardDatas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Card>>> GetCards()
+        public async Task<ActionResult<IEnumerable<BoardData>>> GetBoardData()
         {
-          if (_context.Cards == null)
+          if (_context.BoardData == null)
           {
               return NotFound();
           }
-            return await _context.Cards.ToListAsync();
+            return await _context.BoardData.ToListAsync();
         }
 
-        // GET: api/Cards/5
+        // GET: api/BoardDatas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Card>> GetCard(int id)
+        public async Task<ActionResult<BoardData>> GetBoardData(int id)
         {
-          if (_context.Cards == null)
+          if (_context.BoardData == null)
           {
               return NotFound();
           }
-            var card = await _context.Cards.FindAsync(id);
+            var boardData = await _context.BoardData.FindAsync(id);
 
-            if (card == null)
+            if (boardData == null)
             {
                 return NotFound();
             }
 
-            return card;
+            return boardData;
         }
 
-        // PUT: api/Cards/5
+        // PUT: api/BoardDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCard(int id, Card card)
+        public async Task<IActionResult> PutBoardData(int id, BoardData boardData)
         {
-            if (id != card.CardId)
+            if (id != boardData.BoardId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(card).State = EntityState.Modified;
+            _context.Entry(boardData).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace Kanban.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CardExists(id))
+                if (!BoardDataExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace Kanban.Controllers
             return NoContent();
         }
 
-        // POST: api/Cards
+        // POST: api/BoardDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Card>> PostCard(Card card)
+        public async Task<ActionResult<BoardData>> PostBoardData(BoardData boardData)
         {
-          if (_context.Cards == null)
+          if (_context.BoardData == null)
           {
-              return Problem("Entity set 'KanbanDbContext.Cards'  is null.");
+              return Problem("Entity set 'KanbanDbContext.BoardData'  is null.");
           }
-            _context.Cards.Add(card);
+            _context.BoardData.Add(boardData);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCard", new { id = card.CardId }, card);
+            return CreatedAtAction("GetBoardData", new { id = boardData.BoardId }, boardData);
         }
 
-        // DELETE: api/Cards/5
+        // DELETE: api/BoardDatas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCard(int id)
+        public async Task<IActionResult> DeleteBoardData(int id)
         {
-            if (_context.Cards == null)
+            if (_context.BoardData == null)
             {
                 return NotFound();
             }
-            var card = await _context.Cards.FindAsync(id);
-            if (card == null)
+            var boardData = await _context.BoardData.FindAsync(id);
+            if (boardData == null)
             {
                 return NotFound();
             }
 
-            _context.Cards.Remove(card);
+            _context.BoardData.Remove(boardData);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CardExists(int id)
+        private bool BoardDataExists(int id)
         {
-            return (_context.Cards?.Any(e => e.CardId == id)).GetValueOrDefault();
+            return (_context.BoardData?.Any(e => e.BoardId == id)).GetValueOrDefault();
         }
     }
 }

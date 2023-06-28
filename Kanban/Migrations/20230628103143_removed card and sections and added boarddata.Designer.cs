@@ -3,6 +3,7 @@ using Kanban.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kanban.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    partial class KanbanDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230628103143_removed card and sections and added boarddata")]
+    partial class removedcardandsectionsandaddedboarddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,26 +46,6 @@ namespace Kanban.Migrations
                     b.HasKey("BoardId");
 
                     b.ToTable("Boards");
-                });
-
-            modelBuilder.Entity("Kanban.Models.BoardData", b =>
-                {
-                    b.Property<int>("BoardDataId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BoardDataId"));
-
-                    b.Property<int>("BoardId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BoardDataId");
-
-                    b.ToTable("BoardData");
                 });
 
             modelBuilder.Entity("Kanban.Models.User", b =>

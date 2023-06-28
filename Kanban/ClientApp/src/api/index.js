@@ -5,8 +5,7 @@ export const BASE_URL = 'https://localhost:44443/';
 export const ENDPOINTS = {
     users: 'api/Users',
     boards: 'api/Boards',
-    sections: 'api/Sections',
-    cards: 'api/Cards',
+    boardData: 'api/BoardDatas'
 };
 
 export const createAPIEndpoint = endpoint => {
