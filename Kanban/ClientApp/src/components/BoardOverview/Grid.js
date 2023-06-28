@@ -11,7 +11,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, CardHeader } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-import EmptyBox from '../EmptyBox';
+import EmptyBox from './EmptyBox';
 
 
 
@@ -31,12 +31,12 @@ export default function OverviewGrid() {
     }
 
     function openBoard(index){
-      console.log(index)
       setContext({selectedBoardIndex: index,})
       navigate('/board')
     }
 
     useEffect(() =>{
+      setContext({selectedBoardIndex: -1})
       createAPIEndpoint(ENDPOINTS.boards)
       .fetch()
       .then(response =>{

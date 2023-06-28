@@ -2,9 +2,9 @@ import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { Dialog, Fab, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,  } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import useStateContext from '../../hooks/useStateContext';
+import useStateContext from '../hooks/useStateContext';
 
-export default function ActionButton({props}) {
+export default function DialogActionButton({props}) {
   const {context, setContext} = useStateContext();
 
   const handleClickOpen = () => {
@@ -18,7 +18,7 @@ export default function ActionButton({props}) {
     <><Fab
       onClick={handleClickOpen}
       variant="extended"
-      color="success"
+      color={props.color}
       aria-label="add"
       sx={{
         position: 'absolute',
@@ -26,7 +26,7 @@ export default function ActionButton({props}) {
         right: 16,
       }}>
       <AddIcon sx={{ mr: 1 }} />
-      Add Board
+      {props.title}
     </Fab>
     <Dialog open={context.popup} onClose={handleClose}>
     <DialogActions>
@@ -34,7 +34,9 @@ export default function ActionButton({props}) {
           <CloseIcon />
       </IconButton>
     </DialogActions>
-    <><DialogTitle>{props.title}</DialogTitle>
+    <><DialogTitle>
+        {props.title}
+      </DialogTitle>
       <DialogContent>
           <DialogContentText>
             {props.description}

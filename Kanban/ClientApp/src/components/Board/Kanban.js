@@ -4,8 +4,10 @@ import { useState } from 'react'
 import mockData from './MockData'
 import BoardCard from '../Card/BoardCard'
 import { Box, Grid, Typography } from '@mui/material'
+import useStateContext from '../../hooks/useStateContext'
 
 const Kanban = () => {
+    const {context, setContext} = useStateContext();
     const [data, setData] = useState(mockData)
 
     const onDragEnd = result => {
