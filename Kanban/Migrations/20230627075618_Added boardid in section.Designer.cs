@@ -3,6 +3,7 @@ using Kanban.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kanban.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    partial class KanbanDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230627075618_Added boardid in section")]
+    partial class Addedboardidinsection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,24 +48,63 @@ namespace Kanban.Migrations
                     b.ToTable("Boards");
                 });
 
-            modelBuilder.Entity("Kanban.Models.BoardData", b =>
+            modelBuilder.Entity("Kanban.Models.Card", b =>
                 {
-                    b.Property<int>("BoardDataId")
+                    b.Property<int>("CardId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BoardDataId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CardId"));
+
+                    b.Property<int>("CardCreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CardOrderIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CardText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("CardTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CardId");
+
+                    b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("Kanban.Models.Section", b =>
+                {
+                    b.Property<int>("SectionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SectionId"));
 
                     b.Property<int>("BoardId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Data")
+                    b.Property<int>("SectionCreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SectionDescription")
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("SectionOrderIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SectionTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("BoardDataId");
+                    b.HasKey("SectionId");
 
-                    b.ToTable("BoardData");
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Kanban.Models.User", b =>

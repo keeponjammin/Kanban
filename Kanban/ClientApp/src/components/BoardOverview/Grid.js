@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useStateContext from '../../hooks/useStateContext'
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,7 +11,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Avatar, Button, CardHeader } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-import EmptyBox from '../EmptyBox';
+import EmptyBox from './EmptyBox';
 
 
 
@@ -31,7 +31,6 @@ export default function OverviewGrid() {
     }
 
     function openBoard(index){
-      console.log(index)
       setContext({selectedBoardIndex: index,})
       navigate('/board')
     }
@@ -59,28 +58,28 @@ export default function OverviewGrid() {
         {context.boards.map((boardProperties, index) =>
           (
             <Grid item key={index}>
-            <Card sx={{ maxWidth: 345, minWidth: 200 }}>
-              <CardHeader
-                  avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="User">
-                      {boardProperties.boardCreatedBy?.substring(0,1)?.toUpperCase() ?? ''}
-                  </Avatar>
-                  }
-                  title={boardProperties.boardTitle}
-                  subheader={boardProperties.boardCreatedBy}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {boardProperties.boardDescription}
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-              <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
-              <IconButton aria-label="Delete forever" onClick={() => removeBoard(boardProperties.boardId)}>
-                <DeleteForeverIcon />
-              </IconButton>
-            </CardActions>
-            </Card>
+              <Card sx={{ maxWidth: 345, minWidth: 200 }}>
+                <CardHeader
+                    avatar={
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="User">
+                        {boardProperties.boardCreatedBy?.substring(0,1)?.toUpperCase() ?? ''}
+                    </Avatar>
+                    }
+                    title={boardProperties.boardTitle}
+                    subheader={boardProperties.boardCreatedBy}
+                />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                      {boardProperties.boardDescription}
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
+                <IconButton aria-label="Delete forever" onClick={() => removeBoard(boardProperties.boardId)}>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </CardActions>
+              </Card>
           </Grid>
           ))}
 

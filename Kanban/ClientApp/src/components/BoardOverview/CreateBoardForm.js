@@ -4,6 +4,7 @@ import useStateContext from '../../hooks/useStateContext';
 import useForm from '../../hooks/userForm';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 import AddIcon from '@mui/icons-material/Add';
+import initialData from '../InitialData';
 
 const getFreshModel = ()=>({
     boardTitle: '',
@@ -11,6 +12,10 @@ const getFreshModel = ()=>({
     boardCreatedBy: '',
 })
 
+const getBoardData = (boardId)=>({
+    boardId: boardId, 
+    data: JSON.stringify(initialData),
+})
 export default function CreateBoardForm() {
 
     const {context, setContext} = useStateContext();
@@ -29,6 +34,11 @@ export default function CreateBoardForm() {
             createAPIEndpoint(ENDPOINTS.boards)
                 .post(values)
                 .then(response => {
+                    if(response.data.boardId !== null){
+                        createAPIEndpoint(ENDPOINTS.boardData)
+                        .post(getBoardData(response.data.boardId))
+                        .catch(error => console.log(error))
+                    }
                     setContext({ 
                         popup: false,
                         boards : [...context.boards, response.data],
