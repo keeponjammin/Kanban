@@ -9,14 +9,16 @@ import InitialData from '../InitialData'
 
 
 export default function Kanban(){
-    const {context} = useStateContext();
+    const {context, setContext} = useStateContext();
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState(InitialData);
     useEffect(() =>{
         createAPIEndpoint(ENDPOINTS.boardData)
         .fetchById(context.selectedBoardIndex)
         .then(response =>{  
+            setContext({boardDataIndex: response.data.boardDataId});
             setData(JSON.parse(response.data.data));
+            console.log(context);
             setIsLoaded(true);     
         })
         .catch(error =>{console.log(error);})
@@ -43,6 +45,9 @@ export default function Kanban(){
               data[destinationColIndex].tasks = destinationTask
   
               setData(data)
+              setContext({
+                data: data,
+              })
   
               //add endpoint call where we update the card that was changed. Get boardid from context.
           }

@@ -3,6 +3,8 @@ import useStateContext from '../../hooks/useStateContext';
 import { Box, Typography } from '@mui/material';
 import DialogActionButton from '../DialogActionButton';
 import ReturnButton from './ReturnButton';
+import SaveBoardForm from './SaveBoardForm';
+import SaveIcon from '@mui/icons-material/Save';
 
 export default function Board() {
 
@@ -11,10 +13,11 @@ export default function Board() {
 
 
   const actionButtonProps = {
-    // form : <CreateBoardForm/>,
-    title: 'Save',
-    description: 'Are you sure you wish to save this board?',
-    color: 'primary'
+    form : <SaveBoardForm/>,
+    title: 'Save board',
+    description: 'Are you sure you wish to overwrite this board?',
+    color: 'primary',
+    icon: <SaveIcon sx={{ mr: 1 }} />
   }
 
   const returnButtonProps = {

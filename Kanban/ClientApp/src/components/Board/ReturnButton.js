@@ -12,7 +12,7 @@ export default function ReturnButton({props}) {
    function navigateBack(){
     setContext({
         selectedBoardIndex: -1,
-        boardData: [],
+        boardDataIndex: -1,
     })
     navigate(props.returnLocation)
    }

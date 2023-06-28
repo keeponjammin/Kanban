@@ -55,7 +55,7 @@ namespace Kanban.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBoardData(int id, BoardData boardData)
         {
-            if (id != boardData.BoardId)
+            if (id != boardData.BoardDataId)
             {
                 return BadRequest();
             }

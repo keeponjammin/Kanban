@@ -10,7 +10,7 @@ const getFreshContext =()=>{
             userName:'',
             selectedBoardIndex: -1,
             boards: [],
-            boardData: [],
+            boardDataIndex: -1,
             popup: false,
         }))  
     }

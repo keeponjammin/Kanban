@@ -1,5 +1,4 @@
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add';
 import { Dialog, Fab, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,  } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import useStateContext from '../hooks/useStateContext';
@@ -25,7 +24,7 @@ export default function DialogActionButton({props}) {
         bottom: 16,
         right: 16,
       }}>
-      <AddIcon sx={{ mr: 1 }} />
+      {props.icon}
       {props.title}
     </Fab>
     <Dialog open={context.popup} onClose={handleClose}>
