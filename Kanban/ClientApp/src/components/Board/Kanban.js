@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useState } from 'react'
 import BoardCard from '../Card/BoardCard'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import useStateContext from '../../hooks/useStateContext'
 import { ENDPOINTS, createAPIEndpoint } from '../../api'
 import InitialData from '../InitialData'
+import AddCardButton from './AddCardButton'
 
 
 export default function Kanban(){
@@ -18,7 +19,6 @@ export default function Kanban(){
         .then(response =>{  
             setContext({boardDataIndex: response.data.boardDataId});
             setData(JSON.parse(response.data.data));
-            console.log(context);
             setIsLoaded(true);     
         })
         .catch(error =>{console.log(error);})
@@ -50,6 +50,28 @@ export default function Kanban(){
               })
   
               //add endpoint call where we update the card that was changed. Get boardid from context.
+          }
+      }
+
+      const deleteCard = (id) =>{
+        console.log('delete:' + id);
+      }
+
+      const addCard = (id) =>{
+        console.log('add:' + id);
+      }
+
+      const getAddCardProps = (id) =>{
+        return{
+            parentFunction: addCard,
+            section: id
+        }
+      }
+
+      const getCardProps = (task) => {
+        return {
+            parentFunction: deleteCard,
+            cardProperties: task,
           }
       }
   
@@ -99,8 +121,8 @@ export default function Kanban(){
                                                                   opacity: snapshot.isDragging ? '0.5' : '1'
                                                               }}
                                                           >
-                                                              <BoardCard>
-                                                                  {task.title}
+                                                            {}
+                                                              <BoardCard props = {getCardProps(task)}>
                                                               </BoardCard>
                                                           </div>
                                                       )}
@@ -108,6 +130,7 @@ export default function Kanban(){
                                               ))
                                           }
                                           {provided.placeholder}
+                                          <AddCardButton props = {getAddCardProps(section.id)}/>
                                           </div>
                                       </Grid>
                                   )
