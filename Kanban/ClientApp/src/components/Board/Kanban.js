@@ -13,7 +13,7 @@ import SectionEditButtonGroup from './SectionEditButtonGroup'
 export default function Kanban() {
     const { context, setContext } = useStateContext();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setBoardData] = useState(InitialData);
+    let [data, setBoardData] = useState(InitialData);
     useEffect(() => {
         createAPIEndpoint(ENDPOINTS.boardData)
             .fetchById(context.selectedBoardIndex)
@@ -46,8 +46,7 @@ export default function Kanban() {
             data[destinationColIndex].tasks = destinationTask
 
             setBoardData(data);
-            setContext({data : data});
-            console.log(context.data);
+            setContext({ data: data });
         }
     }
 
@@ -68,17 +67,22 @@ export default function Kanban() {
         array.splice(to, 0, item);
         return array;
     };
-    const updateBoard = (param) =>{
+
+    const getIndex = (parentId, id) => {
+        let index = data.findIndex(e => e.id === parentId);
+        if (index === -1) {
+            index = data.findIndex(e => e.id === id)
+        }
+        return index;
+    }
+    const updateBoard = (param) => {
 
         let modified = false;
-        let index = data.findIndex(e => e.id === param?.parent?.id);
-        if(index === -1){
-            index = data.findIndex(e => e.id === param?.id)
-        }
-        switch (param.option){
+        let index = getIndex(param?.parent?.id, param?.id);
+        switch (param.option) {
             case BoardModifyOptions.AddCard:
                 //todo: replace with form data
-                let card =             
+                let card =
                 {
                     id: 'ass',
                     title: 'Add a card nao!'
@@ -91,35 +95,34 @@ export default function Kanban() {
                 data[index].tasks = [...data[index].tasks]
                     .filter(x => x.id !== param.id);
                 modified = true;
-                
+
                 break;
 
             case BoardModifyOptions.MoveSectionLeft:
-                moveSection(data, index -1, index);
+                moveSection(data, index - 1, index);
                 modified = true;
                 break;
 
             case BoardModifyOptions.MoveSectionRight:
-                moveSection(data, index +1, index);
+                moveSection(data, index + 1, index);
                 modified = true;
                 break;
-                
-                case BoardModifyOptions.RemoveSection:
-                    console.log('remove section:' + param.id);
 
+            case BoardModifyOptions.RemoveSection:
+                data = [...data].filter(x => x.id !== param.id);
+                modified = true;
                 break;
             default:
                 console.log('not implemented');
         }
-        if(modified){
-            //console.log('modified');
-            setContext({data: data});
+        if (modified) {
+            setContext({ data: data });
             setBoardData(data);
         }
     }
 
-    const getUpdateBoardProps = (component, parent ) =>{
-        return{
+    const getUpdateBoardProps = (component, parent) => {
+        return {
             parentFunction: updateBoard,
             boardModifyOptions: BoardModifyOptions,
             component: component,
@@ -150,7 +153,7 @@ export default function Kanban() {
                                         ref={provided.innerRef}
                                         sx={{ minWidth: '250px' }}
                                     >
-                                        <SectionEditButtonGroup props={getUpdateBoardProps(section, null)}/>
+                                        <SectionEditButtonGroup props={getUpdateBoardProps(section, null)} />
                                         <Typography gutterBottom variant="h5" component="div">
                                             <Box sx={{ textAlign: 'center', m: 1 }}>
                                                 {section.title}
