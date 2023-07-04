@@ -76,7 +76,6 @@ export default function Kanban() {
         return index;
     }
     const updateBoard = (param) => {
-
         let modified = false;
         let index = getIndex(param?.parent?.id, param?.id);
         switch (param.option) {

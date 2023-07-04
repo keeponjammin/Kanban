@@ -1,19 +1,24 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
 import React, { forwardRef, useImperativeHandle } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
+import { useState } from 'react';
+
 
 const ButtonDialog = forwardRef(({ props }, ref) => {
-    console.log({props})
+    const [buttonProps, setButtonProps] = useState({});
     const [open, setOpen] = React.useState(false);
     useImperativeHandle(ref, () => ({
-        handleClickOpen() {
+        handleClickOpen(props) {
             setOpen(true);
+            setButtonProps(props);
+            //console.log(props);
         }
     }));
 
     const handleClose = () => {
         setOpen(false);
     };
+
     return (
         <Dialog open={open} onClose={handleClose} >
             <DialogActions>
@@ -22,21 +27,19 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
                 </IconButton>
             </DialogActions>
             <><DialogTitle>
-                {/* {props.title} */}
-                Warning
+                {buttonProps.title}
             </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure?
+                        {buttonProps.description}
                     </DialogContentText>
                 </DialogContent></>
             <DialogActions>
-                <Button onClick={handleClose}>No</Button>
-                <Button onClick={
-                    () => props.parentFunction({option: props.boardModifyOptions.RemoveSection, id: props.component.id})}
+                <Button onClick={() => buttonProps.parentFunction(buttonProps.parentFunctionProps)}
                     autoFocus>
                     Yes
                 </Button>
+                <Button onClick={handleClose}>No</Button>
             </DialogActions>
         </Dialog>
     )

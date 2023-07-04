@@ -1,5 +1,5 @@
 import { Box, ButtonGroup, IconButton } from '@mui/material'
-import React, { useImperativeHandle, useRef } from 'react'
+import React, { useRef } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -11,11 +11,18 @@ const SectionEditButtonGroup = ({ props }) => {
         return {
             option: option,
             id: props.component.id,
+            parent: props.parent ?? null,
+        }
+    }
+    const ButtonProps = (option, title, description) =>{
+        return{
+            parentFunction: props.parentFunction,
+            parentFunctionProps: ParentFunctionProps(option),
+            title: title,
+            description: description,
         }
     }
     const childRef = useRef();
-    //console.log(childRef.current.handleClickOpen());
-    //const { context, setContext } = useStateContext();
     return (
         <Box textAlign='center'>
             <ButtonGroup
@@ -35,8 +42,13 @@ const SectionEditButtonGroup = ({ props }) => {
                     <AddIcon />
                 </IconButton>
                 <IconButton
-                // onClick={() => props.parentFunction(ParentFunctionProps(props.boardModifyOptions.RemoveSection))}
-                onClick={() => childRef.current.handleClickOpen({props})}
+                onClick={() => childRef.current.handleClickOpen(
+                    ButtonProps(
+                        props.boardModifyOptions.RemoveSection,
+                        'Deleting section',
+                        'Are you sure you want to delete this section?'
+                        )
+                    )}
                 >
                     <DeleteForeverIcon />
                 </IconButton>
@@ -53,7 +65,7 @@ const SectionEditButtonGroup = ({ props }) => {
                     <ChevronRightIcon />
                 </IconButton>
             </ButtonGroup>
-            <ButtonDialog ref={childRef}  props={props}/>
+            <ButtonDialog ref={childRef}/>
         </Box>
     )
 }
