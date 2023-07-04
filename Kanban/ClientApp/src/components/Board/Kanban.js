@@ -61,14 +61,20 @@ export default function Kanban() {
         AddSectionRight: "addRight",
     }
 
+
+    const moveSection = (array, to, from) => {
+        const item = array[from];
+        array.splice(from, 1);
+        array.splice(to, 0, item);
+        return array;
+    };
     const updateBoard = (param) =>{
 
         let modified = false;
-        let sourceColIndex = data.findIndex(e => e.id === param?.parent?.id);
-        if(sourceColIndex === -1){
-            sourceColIndex = data.findIndex(e => e.id === param?.id)
+        let index = data.findIndex(e => e.id === param?.parent?.id);
+        if(index === -1){
+            index = data.findIndex(e => e.id === param?.id)
         }
-        console.log(sourceColIndex);
         switch (param.option){
             case BoardModifyOptions.AddCard:
                 //todo: replace with form data
@@ -77,23 +83,27 @@ export default function Kanban() {
                     id: 'ass',
                     title: 'Add a card nao!'
                 };
-                data[sourceColIndex].tasks = [...[...data[sourceColIndex].tasks], card];
+                data[index].tasks = [...[...data[index].tasks], card];
                 modified = true;
                 break;
+
             case BoardModifyOptions.RemoveCard:
-                data[sourceColIndex].tasks = [...data[sourceColIndex].tasks]
+                data[index].tasks = [...data[index].tasks]
                     .filter(x => x.id !== param.id);
                 modified = true;
                 
                 break;
+
             case BoardModifyOptions.MoveSectionLeft:
-                console.log('left:' + param.id);
-
+                moveSection(data, index -1, index);
+                modified = true;
                 break;
+
             case BoardModifyOptions.MoveSectionRight:
-                console.log('right:' + param.id);
-
+                moveSection(data, index +1, index);
+                modified = true;
                 break;
+                
                 case BoardModifyOptions.RemoveSection:
                     console.log('remove section:' + param.id);
 
@@ -102,7 +112,7 @@ export default function Kanban() {
                 console.log('not implemented');
         }
         if(modified){
-            console.log('modified');
+            //console.log('modified');
             setContext({data: data});
             setBoardData(data);
         }
