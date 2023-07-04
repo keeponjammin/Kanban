@@ -1,36 +1,38 @@
+import { v4 as uuidv4 } from 'uuid'
+
 const InitialData = [
     {
-        id: '1',
+        id: uuidv4(),
         title: 'Backlogs',
         tasks: [
             {
-                id: '2',
+                id: uuidv4(),
                 title: 'Learn JavaScript'
             },
             {
-                id: '3',
+                id: uuidv4(),
                 title: 'Learn Git'
             },
             {
-                id: '4',
+                id: uuidv4(),
                 title: 'Learn Python'
             },
         ]
     },
     {
-        id: '2',
+        id: uuidv4(),
         title: 'Planned',
         tasks: [
         ]
     },
     {
-        id: '3',
+        id: uuidv4(),
         title: 'In Progress',
         tasks: [
         ]
     },
     {
-        id: '4',
+        id: uuidv4(),
         title: 'Completed',
         tasks: [
         ]
