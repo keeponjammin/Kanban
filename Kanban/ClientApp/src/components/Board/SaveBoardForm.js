@@ -4,13 +4,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import useStateContext, { ContextProvider } from '../../hooks/useStateContext';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 
-export default function SaveBoardForm() {
+export default function SaveBoardForm({formFunction}) {
 
     const {context, setContext} = useStateContext();
 
     const validate = ()=>{
         let temp = {}
-        //temp.boardTitle = values.boardTitle !== "" ? "" : "Board title is required."
         return Object.values(temp).every(x => x === "")
     }
 
@@ -31,8 +30,8 @@ export default function SaveBoardForm() {
                 .then(response => {
                     console.log(response);
                     setContext({
-                        popup: false,
                     })
+                    formFunction()
                 })
                 .catch(error => console.log(error))
         }

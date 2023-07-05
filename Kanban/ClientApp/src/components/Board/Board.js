@@ -3,8 +3,9 @@ import useStateContext from '../../hooks/useStateContext';
 import { Box, Typography } from '@mui/material';
 import DialogActionButton from '../DialogActionButton';
 import ReturnButton from './ReturnButton';
-import SaveBoardForm from './SaveBoardForm';
 import SaveIcon from '@mui/icons-material/Save';
+import LoadingOverlay from '../LoadingOverlay';
+import SaveBoardForm from './SaveBoardForm';
 
 export default function Board() {
 
@@ -13,11 +14,11 @@ export default function Board() {
 
 
   const actionButtonProps = {
-    form : <SaveBoardForm/>,
     title: 'Save board',
-    description: 'Are you sure you wish to overwrite this board?',
+    description: 'Are you sure you wish to save?',
     color: 'primary',
-    icon: <SaveIcon sx={{ mr: 1 }} />
+    icon: <SaveIcon sx={{ mr: 1 }} />,
+    form: <SaveBoardForm/>
   }
 
   const returnButtonProps = {
@@ -32,7 +33,7 @@ export default function Board() {
           Board {context.selectedBoardIndex}
         </Box>
       </Typography>
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<LoadingOverlay/>}>
         <Kanban/>
       </Suspense>
       <DialogActionButton props = {actionButtonProps} />

@@ -5,6 +5,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ButtonDialog from '../ButtonDialog';
+import ButtonProperties from '../Functions/ButtonProperties';
 
 const SectionEditButtonGroup = ({ props }) => {
     const ParentFunctionProps = (option) => {
@@ -12,14 +13,6 @@ const SectionEditButtonGroup = ({ props }) => {
             option: option,
             id: props.component.id,
             parent: props.parent ?? null,
-        }
-    }
-    const ButtonProps = (option, title, description) =>{
-        return{
-            parentFunction: props.parentFunction,
-            parentFunctionProps: ParentFunctionProps(option),
-            title: title,
-            description: description,
         }
     }
     const childRef = useRef();
@@ -43,8 +36,9 @@ const SectionEditButtonGroup = ({ props }) => {
                 </IconButton>
                 <IconButton
                 onClick={() => childRef.current.handleClickOpen(
-                    ButtonProps(
-                        props.boardModifyOptions.RemoveSection,
+                    ButtonProperties(
+                        props.parentFunction,
+                        ParentFunctionProps(props.boardModifyOptions.RemoveSection),
                         'Deleting section',
                         'Are you sure you want to delete this section?'
                         )

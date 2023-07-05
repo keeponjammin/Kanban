@@ -1,21 +1,22 @@
-import React from 'react'
-import { Dialog, Fab, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,  } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import useStateContext from '../hooks/useStateContext';
+import React, { useRef } from 'react'
+import { Fab } from '@mui/material';
+import ButtonDialog from './ButtonDialog';
+import ButtonProperties from './Functions/ButtonProperties';
 
-export default function DialogActionButton({props}) {
-  const {context, setContext} = useStateContext();
-
-  const handleClickOpen = () => {
-    setContext({popup: true});
-  };
-
-  const handleClose = () => {
-    setContext({popup: false});
-  };
+export default function DialogActionButton({ props }) {
+  const childRef = useRef();
+  //console.log(props)
   return (
     <><Fab
-      onClick={handleClickOpen}
+      onClick={() => childRef.current.handleClickOpen(
+        ButtonProperties(
+          props.function,
+          props.variables,
+          props.title,
+          props.description,
+          props.form,
+        )
+      )}
       variant="extended"
       color={props.color}
       aria-label="add"
@@ -26,22 +27,6 @@ export default function DialogActionButton({props}) {
       }}>
       {props.icon}
       {props.title}
-    </Fab>
-    <Dialog open={context.popup} onClose={handleClose}>
-    <DialogActions>
-        <IconButton aria-label="close" onClick={handleClose}>
-          <CloseIcon />
-      </IconButton>
-    </DialogActions>
-    <><DialogTitle>
-        {props.title}
-      </DialogTitle>
-      <DialogContent>
-          <DialogContentText>
-            {props.description}
-          </DialogContentText>
-          {props.form}
-      </DialogContent></>
-    </Dialog></>
+    </Fab><ButtonDialog ref={childRef} /></>
   )
 }

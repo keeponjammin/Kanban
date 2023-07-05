@@ -3,6 +3,7 @@ import { Card, CardActions, CardContent, Typography } from "@mui/material"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import ButtonDialog from '../ButtonDialog';
+import ButtonProperties from '../Functions/ButtonProperties';
 
 const BoardCard = ({ props }) => {
   const ParentFunctionProps = (option) => {
@@ -10,14 +11,6 @@ const BoardCard = ({ props }) => {
         option: option,
         id: props.component.id,
         parent: props.parent ?? null,
-    }
-}
-  const ButtonProps = (option, title, description) =>{
-    return{
-        parentFunction: props.parentFunction,
-        parentFunctionProps: ParentFunctionProps(option),
-        title: title,
-        description: description,
     }
 }
   const childRef = useRef();
@@ -31,8 +24,9 @@ const BoardCard = ({ props }) => {
       </CardContent>
       <CardActions>
         <IconButton aria-label="Delete forever" onClick={() => childRef.current.handleClickOpen(
-          ButtonProps(
-            props.boardModifyOptions.RemoveCard,
+          ButtonProperties(
+            props.parentFunction,
+            ParentFunctionProps(props.boardModifyOptions.RemoveCard),
             'Deleting card',
             'Are you sure you want to delete this card?'
           )
