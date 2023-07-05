@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import useStateContext from '../../hooks/useStateContext'
 import { ENDPOINTS, createAPIEndpoint } from '../../api'
@@ -9,6 +9,9 @@ import SectionEditButtonGroup from './SectionEditButtonGroup'
 import BoardCard from './01 Card/BoardCard'
 import BoardModifyOptions from '../01 General/BoardModifyOptions'
 import updateBoard from '../Functions/UpdateBoard'
+import DialogActionButton from '../01 General/DialogActionButton'
+import SaveBoardForm from './SaveBoardForm'
+import SaveIcon from '@mui/icons-material/Save';
 
 
 export default function Kanban() {
@@ -62,7 +65,7 @@ export default function Kanban() {
         }
     }
 
-    function getUpdateBoard(param){
+    function getUpdateBoard(param) {
         const newData = updateBoard(param, data);
         if (data !== newData) {
             setBoardData(newData)
@@ -70,7 +73,7 @@ export default function Kanban() {
     }
     return (
 
-        <DragDropContext onDragEnd={onDragEnd}>
+        <><DragDropContext onDragEnd={onDragEnd}>
             <Grid container
                 spacing={{ xs: 2, md: 3 }}
                 columns={{ xs: 4, sm: 8, md: 12 }}
@@ -78,63 +81,64 @@ export default function Kanban() {
                 justifyContent="center"
                 alignItems="stretch"
             >
-                {
-                    data.map(section => (
-                        <Droppable
-                            key={section.id}
-                            droppableId={section.id}
-                        >
-                            {
-                                (provided) => (
-                                    <Grid item
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        sx={{ minWidth: '250px' }}
-                                    >
-                                        <SectionEditButtonGroup props={getUpdateBoardProps(section, null)} />
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            <Box sx={{ textAlign: 'center', m: 1 }}>
-                                                {section.title}
-                                            </Box>
-                                        </Typography>
-                                        <div>
-                                            {
-                                                section.tasks.map((task, index) => (
-                                                    <Draggable
-                                                        key={task.id}
-                                                        draggableId={task.id}
-                                                        index={index}
-                                                    >
-                                                        {(provided, snapshot) => (
-                                                            <div
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                                style={{
-                                                                    ...provided.draggableProps.style,
-                                                                    opacity: snapshot.isDragging ? '0.5' : '1'
-                                                                }}
-                                                            >
-                                                                { }
-                                                                <BoardCard props={getUpdateBoardProps(task, section)}>
-                                                                </BoardCard>
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                ))
-                                            }
-                                            {provided.placeholder}
-                                        </div>
-                                        <AddCardButton props={getUpdateBoardProps(section, null)} />
-                                    </Grid>
-                                )
-                            }
+                {data.map(section => (
+                    <Droppable
+                        key={section.id}
+                        droppableId={section.id}
+                    >
+                        {(provided) => (
+                            <Grid item
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                sx={{ minWidth: '250px' }}
+                            >
+                                <SectionEditButtonGroup props={getUpdateBoardProps(section, null)} />
+                                <Typography gutterBottom variant="h5" component="div">
+                                    <Box sx={{ textAlign: 'center', m: 1 }}>
+                                        {section.title}
+                                    </Box>
+                                </Typography>
+                                <div>
+                                    {section.tasks.map((task, index) => (
+                                        <Draggable
+                                            key={task.id}
+                                            draggableId={task.id}
+                                            index={index}
+                                        >
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    style={{
+                                                        ...provided.draggableProps.style,
+                                                        opacity: snapshot.isDragging ? '0.5' : '1'
+                                                    }}
+                                                >
 
-                        </Droppable>
-                    ))
-                }
+                                                    <BoardCard props={getUpdateBoardProps(task, section)}>
+                                                    </BoardCard>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                                <AddCardButton props={getUpdateBoardProps(section, null)} />
+                            </Grid>
+                        )}
+
+                    </Droppable>
+                ))}
             </Grid>
-        </DragDropContext>
+        </DragDropContext><DialogActionButton props={{
+            title: 'Save board',
+            description: 'Are you sure you wish to save?',
+            color: 'primary',
+            icon: <SaveIcon sx={{ mr: 1 }} />,
+            form: <SaveBoardForm />,
+            data: data,
+        }} /></>
 
 
     )

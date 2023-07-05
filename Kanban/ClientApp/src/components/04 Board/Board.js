@@ -11,14 +11,6 @@ const Board = () => {
   const { context } = useStateContext();
   const Kanban = React.lazy(() => import('./Kanban'));
 
-  const actionButtonProps = {
-    title: 'Save board',
-    description: 'Are you sure you wish to save?',
-    color: 'primary',
-    icon: <SaveIcon sx={{ mr: 1 }} />,
-    form: <SaveBoardForm />,
-  };
-
   const returnButtonProps = {
     title: 'Overview',
     returnLocation: '/boardoverview',
@@ -33,7 +25,6 @@ const Board = () => {
       <Suspense fallback={<LoadingOverlay />}>
         <Kanban />
       </Suspense>
-      <DialogActionButton props={actionButtonProps} />
     </>
   );
 };

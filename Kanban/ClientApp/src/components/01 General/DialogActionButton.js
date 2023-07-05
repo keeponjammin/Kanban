@@ -12,7 +12,8 @@ export default function DialogActionButton({ props }) {
       props.variables,
       props.title,
       props.description,
-      props.form
+      props.form,
+      props.data,
     );
     childRef.current.handleClickOpen(buttonProps);
   };

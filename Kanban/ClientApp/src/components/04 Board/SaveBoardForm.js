@@ -7,32 +7,24 @@ export default function SaveBoardForm({ formProps }) {
 
     const { context, setContext } = useStateContext();
 
-    const validate = () => {
-        let temp = {}
-        return Object.values(temp).every(x => x === "")
-    }
-
     const boardData = () => ({
+        
         boardDataId: context.boardDataIndex,
         boardData: {
             boardDataId: context.boardDataIndex,
             boardId: context.selectedBoardIndex,
-            data: JSON.stringify(context.data),
+            data: JSON.stringify(formProps.data),
         }
 
     })
     const saveBoard = e => {
         e.preventDefault();
-        if (validate()) {
             createAPIEndpoint(ENDPOINTS.boardData)
                 .put(boardData().boardDataId, boardData().boardData)
                 .then(() => {
-                    setContext({
-                    })
                     formProps.formFunction()
                 })
                 .catch(error => console.log(error))
-        }
     }
 
     return (

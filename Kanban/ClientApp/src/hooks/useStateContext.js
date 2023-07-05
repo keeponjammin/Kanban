@@ -6,12 +6,12 @@ export const stateContext = createContext();
 const getFreshContext =()=>{
     if(localStorage.getItem('context') === null){
         localStorage.setItem('context', JSON.stringify({
+            boardDataIndex: -1,
+            boards: [],
+            data: [],
+            selectedBoardIndex: -1,
             userId:-1,
             userName:'',
-            selectedBoardIndex: -1,
-            boards: [],
-            boardDataIndex: -1,
-            popup: false,
         }))  
     }
     return JSON.parse(localStorage.getItem('context'))
