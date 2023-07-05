@@ -1,7 +1,6 @@
 import { Box, Button, DialogActions } from '@mui/material'
 import React from 'react'
-import SaveIcon from '@mui/icons-material/Save';
-import useStateContext, { ContextProvider } from '../../hooks/useStateContext';
+import useStateContext from '../../hooks/useStateContext';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 
 export default function SaveBoardForm({ formProps }) {

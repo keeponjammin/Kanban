@@ -1,11 +1,9 @@
-import { Box, Button, Card, CardContent, CardMedia, TextField, Typography } from '@mui/material';
 import React from 'react';
-import Center from '../01 General/Center';
-import useForm from '../../hooks/userForm';
-import { ENDPOINTS, createAPIEndpoint } from '../../api';
-import header from '../../images/header.jpg';
 import useStateContext from '../../hooks/useStateContext';
 import { useNavigate } from 'react-router-dom';
+import useForm from '../../hooks/userForm';
+import { ENDPOINTS, createAPIEndpoint } from '../../api';
+import LoginPage from './LoginPage';
 
 const getFreshModel = () => ({
     userName: '',
@@ -16,12 +14,7 @@ export default function Login() {
     const { context, setContext } = useStateContext();
     const navigate = useNavigate();
 
-    const {
-        values,
-        errors,
-        setErrors,
-        handleInputChange,
-    } = useForm(getFreshModel);
+    const { values, errors, setErrors, handleInputChange } = useForm(getFreshModel);
 
     const login = (e) => {
         e.preventDefault();
@@ -41,65 +34,18 @@ export default function Login() {
 
     const validate = () => {
         let temp = {};
-        temp.userEmail = /\S+@\S+\.\S+/.test(values.userEmail)
-            ? ''
-            : 'Email is not valid.';
+        temp.userEmail = /\S+@\S+\.\S+/.test(values.userEmail) ? '' : 'Email is not valid.';
         temp.userName = values.userName !== '' ? '' : 'Name is required.';
         setErrors(temp);
         return Object.values(temp).every((x) => x === '');
     };
 
     return (
-        <Center>
-            <Card sx={{ width: '400px' }}>
-                <CardMedia component="img" height="200" image={header} alt="Kanban header image" />
-                <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography variant="h3" sx={{ my: 3 }}>
-                        Kanban
-                    </Typography>
-                    <Box
-                        component="form"
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={login}
-                        sx={{
-                            '& .MuiTextField-root': {
-                                margin: 1,
-                                width: '90%',
-                            },
-                        }}
-                    >
-                        <TextField
-                            label="Email"
-                            name="userEmail"
-                            value={values.userEmail}
-                            onChange={handleInputChange}
-                            variant="outlined"
-                            error={!!errors.userEmail}
-                            helperText={errors.userEmail}
-                        />
-                        <TextField
-                            label="Name"
-                            name="userName"
-                            value={values.userName}
-                            onChange={handleInputChange}
-                            variant="outlined"
-                            error={!!errors.userName}
-                            helperText={errors.userName}
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            sx={{
-                                width: '90%',
-                            }}
-                        >
-                            Login
-                        </Button>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Center>
+        <LoginPage
+            values={values}
+            errors={errors}
+            handleInputChange={handleInputChange}
+            onSubmit={login}
+        />
     );
 }
