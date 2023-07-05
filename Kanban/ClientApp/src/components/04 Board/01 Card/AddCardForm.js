@@ -13,11 +13,11 @@ export default function AddCardForm({ formProps }) {
     };
     const addCard = () => {
         formProps.formFunction();
-        
-        formProps.additionalFunction({
-            option: formProps.additionalFunctionVariables.boardModifyOptions.AddCard,
-            id: formProps.additionalFunctionVariables.component.id,
-            parent: formProps.additionalFunctionVariables?.parent?.id,
+        console.log(formProps);
+        formProps.function({
+            option: formProps.variables.boardModifyOptions.AddCard,
+            id: formProps.variables.component.id,
+            parent: formProps.variables?.parent?.id,
             value: inputText,
         });
     }

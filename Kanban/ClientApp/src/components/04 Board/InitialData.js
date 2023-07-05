@@ -7,16 +7,8 @@ const InitialData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn JavaScript'
-            },
-            {
-                id: uuidv4(),
-                title: 'Learn Git'
-            },
-            {
-                id: uuidv4(),
-                title: 'Learn Python'
-            },
+                title: 'Create cards'
+            }
         ]
     },
     {

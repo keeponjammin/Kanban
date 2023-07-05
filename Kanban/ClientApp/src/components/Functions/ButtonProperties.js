@@ -1,4 +1,4 @@
-const ButtonProperties = (buttonFunction, variables, title, description, form) => {
+function ButtonProperties(buttonFunction, variables, title, description, form) {
     return {
         function: buttonFunction,
         variables: variables,
