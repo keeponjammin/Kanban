@@ -1,10 +1,10 @@
 import React, { Suspense} from 'react'
 import useStateContext from '../../hooks/useStateContext';
 import { Box, Typography } from '@mui/material';
-import DialogActionButton from '../DialogActionButton';
+import DialogActionButton from '../01 General/DialogActionButton';
 import ReturnButton from './ReturnButton';
 import SaveIcon from '@mui/icons-material/Save';
-import LoadingOverlay from '../LoadingOverlay';
+import LoadingOverlay from '../01 General/LoadingOverlay';
 import SaveBoardForm from './SaveBoardForm';
 
 export default function Board() {

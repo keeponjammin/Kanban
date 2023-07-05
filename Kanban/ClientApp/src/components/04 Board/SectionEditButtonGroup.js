@@ -1,10 +1,12 @@
 import { Box, ButtonGroup, IconButton } from '@mui/material'
 import React, { useRef } from 'react'
+
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ButtonDialog from '../ButtonDialog';
+
+import ButtonDialog from '../01 General/ButtonDialog';
 import ButtonProperties from '../Functions/ButtonProperties';
 
 const SectionEditButtonGroup = ({ props }) => {

@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
-import React, { Component, cloneElement, forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 
@@ -12,6 +12,10 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
         handleClickOpen(props) {
             setOpen(true);
             setButtonProps(props);
+        },
+
+        handleClose () {
+            setOpen(false);
         }
     }));
 
@@ -40,9 +44,9 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
                 <DialogActions>
                     <Button onClick={() => buttonProps.function(buttonProps.variables)}
                         autoFocus>
-                        Yes
+                        I'm sure
                     </Button>
-                    <Button onClick={handleClose}>No</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             }
         </Dialog>

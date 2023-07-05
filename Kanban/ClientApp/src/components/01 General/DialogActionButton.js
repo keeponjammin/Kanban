@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Fab } from '@mui/material';
 import ButtonDialog from './ButtonDialog';
-import ButtonProperties from './Functions/ButtonProperties';
+import ButtonProperties from '../Functions/ButtonProperties';
 
 export default function DialogActionButton({ props }) {
   const childRef = useRef();

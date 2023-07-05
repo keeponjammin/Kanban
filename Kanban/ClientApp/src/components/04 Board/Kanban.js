@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useState } from 'react'
-import BoardCard from '../Card/BoardCard'
 import { Box, Grid, Typography } from '@mui/material'
 import useStateContext from '../../hooks/useStateContext'
 import { ENDPOINTS, createAPIEndpoint } from '../../api'
-import InitialData from '../InitialData'
+import InitialData from './InitialData'
 import AddCardButton from './AddCardButton'
 import SectionEditButtonGroup from './SectionEditButtonGroup'
+import BoardCard from './01 Card/BoardCard'
 
 
 export default function Kanban() {

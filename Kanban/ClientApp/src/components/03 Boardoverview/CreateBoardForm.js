@@ -1,10 +1,9 @@
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material'
 import React, { useRef } from 'react'
 import useStateContext from '../../hooks/useStateContext';
 import useForm from '../../hooks/userForm';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
-import AddIcon from '@mui/icons-material/Add';
-import initialData from '../InitialData';
+import initialData from '../04 Board/InitialData';
 
 const getFreshModel = () => ({
     boardTitle: '',
@@ -18,7 +17,7 @@ const getBoardData = (boardId) => ({
 })
 
 
-export default function CreateBoardForm({formFunction}) {
+export default function CreateBoardForm({ formFunction }) {
 
     const { context, setContext } = useStateContext();
     const {
@@ -28,6 +27,9 @@ export default function CreateBoardForm({formFunction}) {
         handleInputChange
     } = useForm(getFreshModel);
 
+    const handleFunction = () => {
+        formFunction();
+    }
     const addBoard = e => {
         e.preventDefault();
         if (validate()) {
@@ -57,14 +59,12 @@ export default function CreateBoardForm({formFunction}) {
     }
 
     return (
-        <Box sx={{
-            '& .MuiTextField-root': {
-                margin: 1,
-                width: '100%'
-            }
-        }}>
-            <form noValidate autoComplete="off" onSubmit={addBoard}>
+        <form noValidate autoComplete="off" onSubmit={addBoard}>
+            <DialogContent>
                 <TextField
+                    autofocus
+                    margin="dense"
+                    fullWidth
                     label="Board title"
                     name="boardTitle"
                     value={values.boardTitle}
@@ -72,24 +72,21 @@ export default function CreateBoardForm({formFunction}) {
                     variant="standard"
                     {...(errors.boardTitle && { error: true, helperText: errors.boardTitle })} />
                 <TextField
+
+                    margin="dense"
+                    fullWidth
                     label="Board description"
                     name="boardDescription"
                     value={values.boardDescription}
                     onChange={handleInputChange}
                     variant="standard" />
+            </DialogContent>
+            <DialogActions>
                 <Button
                     type="submit"
-                    variant="contained"
-                    size="large"
-                    color="success"
-                    startIcon={<AddIcon />}
-                    sx={{
-                        margin: 1,
-                    }}
-                >
-                    Add Board
-                </Button>
-            </form>
-        </Box>
+                >Add Board</Button>
+                <Button onClick={handleFunction}>Cancel</Button>
+            </DialogActions>
+        </form>
     )
 }

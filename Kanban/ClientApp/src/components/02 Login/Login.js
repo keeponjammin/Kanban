@@ -1,10 +1,10 @@
 import { Box, Button, Card, CardContent, CardMedia, TextField, Typography } from '@mui/material'
 import React from 'react'
-import Center from './Center'
-import useForm from '../hooks/userForm'
-import { ENDPOINTS, createAPIEndpoint } from '../api'
-import header from '../images/header.jpg'
-import useStateContext from '../hooks/useStateContext'
+import Center from '../01 General/Center'
+import useForm from '../../hooks/userForm'
+import { ENDPOINTS, createAPIEndpoint } from '../../api'
+import header from '../../images/header.jpg'
+import useStateContext from '../../hooks/useStateContext'
 import { useNavigate } from 'react-router-dom'
 
 const getFreshModel = ()=>({

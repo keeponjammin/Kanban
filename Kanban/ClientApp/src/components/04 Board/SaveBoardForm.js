@@ -1,21 +1,21 @@
-import { Box, Button} from '@mui/material'
+import { Box, Button, DialogActions } from '@mui/material'
 import React from 'react'
 import SaveIcon from '@mui/icons-material/Save';
 import useStateContext, { ContextProvider } from '../../hooks/useStateContext';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 
-export default function SaveBoardForm({formFunction}) {
+export default function SaveBoardForm({ formFunction }) {
 
-    const {context, setContext} = useStateContext();
+    const { context, setContext } = useStateContext();
 
-    const validate = ()=>{
+    const validate = () => {
         let temp = {}
         return Object.values(temp).every(x => x === "")
     }
 
-    const boardData = () =>({
+    const boardData = () => ({
         boardDataId: context.boardDataIndex,
-        boardData : {
+        boardData: {
             boardDataId: context.boardDataIndex,
             boardId: context.selectedBoardIndex,
             data: JSON.stringify(context.data),
@@ -24,9 +24,9 @@ export default function SaveBoardForm({formFunction}) {
     })
     const saveBoard = e => {
         e.preventDefault();
-        if (validate()){
+        if (validate()) {
             createAPIEndpoint(ENDPOINTS.boardData)
-                .put(boardData().boardDataId, boardData().boardData)  
+                .put(boardData().boardDataId, boardData().boardData)
                 .then(response => {
                     console.log(response);
                     setContext({
@@ -37,27 +37,11 @@ export default function SaveBoardForm({formFunction}) {
         }
     }
 
-  return (
-    <Box sx={{
-        '& .MuiTextField-root': {
-            margin: 1,
-            width: '100%'
-        }
-    }}>
+    return (
         <form noValidate autoComplete="off" onSubmit={saveBoard}>
-            <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="success"
-                startIcon={<SaveIcon />}
-                sx={{
-                    width: '100%',
-                }}
-            >
-                Save board
-            </Button>
+            <DialogActions>
+                <Button type="submit">I'm sure</Button>
+            </DialogActions>
         </form>
-    </Box>
-  )
+    )
 }

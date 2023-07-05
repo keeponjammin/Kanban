@@ -12,8 +12,8 @@ import { Avatar, Button, CardHeader } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import EmptyBox from './EmptyBox';
-import ButtonDialog from '../ButtonDialog';
 import ButtonProperties from '../Functions/ButtonProperties';
+import ButtonDialog from '../01 General/ButtonDialog';
 
 
 

@@ -2,8 +2,8 @@ import React, { useRef } from 'react'
 import { Card, CardActions, CardContent, Typography } from "@mui/material"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
-import ButtonDialog from '../ButtonDialog';
-import ButtonProperties from '../Functions/ButtonProperties';
+import ButtonDialog from '../../01 General/ButtonDialog';
+import ButtonProperties from '../../Functions/ButtonProperties';
 
 const BoardCard = ({ props }) => {
   const ParentFunctionProps = (option) => {
