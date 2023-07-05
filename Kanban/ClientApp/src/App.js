@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import Overview from "./components/BoardOverview/Overview";
-import Board from "./components/Board/Board";
+import Login from "./components/02 Login/Login";
+import Overview from "./components/03 Boardoverview/Overview";
+import Board from "./components/04 Board/Board"
 
 function App() {
     return (

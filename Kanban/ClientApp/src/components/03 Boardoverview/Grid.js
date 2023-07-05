@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import useStateContext from '../../hooks/useStateContext'
 import { Grid } from '@mui/material';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
@@ -12,12 +12,15 @@ import { Avatar, Button, CardHeader } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import EmptyBox from './EmptyBox';
+import ButtonProperties from '../Functions/ButtonProperties';
+import ButtonDialog from '../01 General/ButtonDialog';
 
 
 
 export default function OverviewGrid() {
     const {context, setContext} = useStateContext();
     const navigate = useNavigate();
+    const childRef = useRef();
 
     function removeBoard(index){
       createAPIEndpoint(ENDPOINTS.boards)
@@ -26,6 +29,7 @@ export default function OverviewGrid() {
             setContext({ 
                 boards : context.boards.filter(x => x.boardId !== index),
             })
+            childRef.current.handleClose();
         })
         .catch(error => console.log(error))
     }
@@ -75,14 +79,23 @@ export default function OverviewGrid() {
                 </CardContent>
                 <CardActions disableSpacing>
                 <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
-                <IconButton aria-label="Delete forever" onClick={() => removeBoard(boardProperties.boardId)}>
+                <IconButton aria-label="Delete forever" 
+                  onClick={() => childRef.current.handleClickOpen(
+                    ButtonProperties(
+                        removeBoard,
+                        boardProperties.boardId,
+                        'Deleting board',
+                        'Are you sure you want to delete this board?'
+                        )
+                    )}
+                    >
                   <DeleteForeverIcon />
                 </IconButton>
               </CardActions>
               </Card>
           </Grid>
           ))}
-
+      <ButtonDialog ref={childRef}/>
       </Grid>
       :
       <EmptyBox/>
