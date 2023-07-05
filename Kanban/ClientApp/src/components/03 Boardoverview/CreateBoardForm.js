@@ -37,7 +37,7 @@ export default function CreateBoardForm({ formProps }) {
                             .catch((error) => console.log(error));
                     }
                     setContext({
-                        boards: [...context.boards, response.data],
+                        createdBoards: context.createdBoards + 1
                     });
                     formProps.formFunction();
                 })

@@ -7,11 +7,10 @@ const getFreshContext =()=>{
     if(localStorage.getItem('context') === null){
         localStorage.setItem('context', JSON.stringify({
             boardDataIndex: -1,
-            boards: [],
-            data: [],
             selectedBoardIndex: -1,
             userId:-1,
             userName:'',
+            createdBoards: 0,
         }))  
     }
     return JSON.parse(localStorage.getItem('context'))

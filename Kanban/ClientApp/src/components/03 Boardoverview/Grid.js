@@ -21,12 +21,12 @@ export default function OverviewGrid() {
     const {context, setContext} = useStateContext();
     const childRef = useRef();
     const navigate = useNavigate();
-    const [boards, setBoards] = useState();
+    const [boards, setBoards] = useState([]);
 
     function removeBoard(index){
       createAPIEndpoint(ENDPOINTS.boards)
         .delete(index)
-        .then(response => {
+        .then(() => {
             setBoards([...boards].filter(x => x.boardId !== index))
             childRef.current.handleClose();
         })
@@ -45,7 +45,7 @@ export default function OverviewGrid() {
         setBoards(response.data)
       })
       .catch(error =>{console.log(error);})
-    }, []);
+    }, [context.amountOfBoards]);
 
     return (
       boards.length !== 0
