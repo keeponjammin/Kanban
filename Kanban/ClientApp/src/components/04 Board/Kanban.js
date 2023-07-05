@@ -8,6 +8,7 @@ import InitialData from './InitialData'
 import AddCardButton from './AddCardButton'
 import SectionEditButtonGroup from './SectionEditButtonGroup'
 import BoardCard from './01 Card/BoardCard'
+import { v4 as uuidv4 } from 'uuid'
 
 
 export default function Kanban() {
@@ -83,8 +84,8 @@ export default function Kanban() {
                 //todo: replace with form data
                 let card =
                 {
-                    id: 'ass',
-                    title: 'Add a card nao!'
+                    id: uuidv4(),
+                    title: param.value,
                 };
                 data[index].tasks = [...[...data[index].tasks], card];
                 modified = true;

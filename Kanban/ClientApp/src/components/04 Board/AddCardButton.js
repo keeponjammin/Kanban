@@ -1,24 +1,29 @@
 import { Button } from '@mui/material'
-import React from 'react'
+import React, { useRef } from 'react'
 import AddIcon from '@mui/icons-material/Add';
+import ButtonDialog from '../01 General/ButtonDialog';
+import AddCardForm from './01 Card/AddCardForm';
 
 
 const AddCardButton = ({ props }) => {
-    const ParentFunctionProps = {
-        option: props.boardModifyOptions.AddCard,
-        id: props.component.id,
-        parent: props?.parent ?? null,
-    }
-    
+    const childRef = useRef();
+    const form = <AddCardForm />;
     return (
-        <Button
+        <><Button
             variant="outlined"
             color="success"
             startIcon={<AddIcon />}
             sx={{ width: '100%' }}
-            onClick={() => props.parentFunction(ParentFunctionProps)}>
+            onClick={() => childRef.current.handleClickOpen({
+                function: props.parentFunction,
+                variables: props,
+                title: 'Add card',
+                description: 'Fill in the following form to create a new card',
+                form: <AddCardForm />,
+            })}
+        >
             Add Card
-        </Button>
+        </Button><ButtonDialog ref={childRef} /></>
     )
 }
 

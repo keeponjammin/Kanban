@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
 import { Fab } from '@mui/material';
-import ButtonDialog from './ButtonDialog';
 import ButtonProperties from '../Functions/ButtonProperties';
+import ButtonDialog from './ButtonDialog';
 
 export default function DialogActionButton({ props }) {
   const childRef = useRef();
-  //console.log(props)
   return (
     <><Fab
       onClick={() => childRef.current.handleClickOpen(

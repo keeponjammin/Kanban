@@ -14,7 +14,7 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
             setButtonProps(props);
         },
 
-        handleClose () {
+        handleClose() {
             setOpen(false);
         }
     }));
@@ -22,6 +22,12 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const formProps = {
+        formFunction: handleClose,
+        additionalFunction: buttonProps.function,
+        additionalFunctionVariables: buttonProps.variables,
+    }
     const hasForm = buttonProps.form !== null && typeof buttonProps.form !== 'undefined';
     return (
         <Dialog open={open} onClose={handleClose} >
@@ -38,9 +44,9 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
                         {buttonProps.description}
                     </DialogContentText>
                 </DialogContent></>
-            {hasForm ? 
-            React.cloneElement(buttonProps.form, { formFunction: handleClose }) 
-            :
+            {hasForm ?
+                React.cloneElement(buttonProps.form, { formProps })
+                :
                 <DialogActions>
                     <Button onClick={() => buttonProps.function(buttonProps.variables)}
                         autoFocus>

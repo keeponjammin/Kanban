@@ -17,7 +17,7 @@ const getBoardData = (boardId) => ({
 })
 
 
-export default function CreateBoardForm({ formFunction }) {
+export default function CreateBoardForm({ formProps }) {
 
     const { context, setContext } = useStateContext();
     const {
@@ -28,7 +28,7 @@ export default function CreateBoardForm({ formFunction }) {
     } = useForm(getFreshModel);
 
     const handleFunction = () => {
-        formFunction();
+        formProps.formFunction();
     }
     const addBoard = e => {
         e.preventDefault();
@@ -45,7 +45,7 @@ export default function CreateBoardForm({ formFunction }) {
                     setContext({
                         boards: [...context.boards, response.data],
                     })
-                    formFunction()
+                    formProps.formFunction()
                 })
                 .catch(error => console.log(error))
         }
@@ -62,7 +62,7 @@ export default function CreateBoardForm({ formFunction }) {
         <form noValidate autoComplete="off" onSubmit={addBoard}>
             <DialogContent>
                 <TextField
-                    autofocus
+                    autoFocus
                     margin="dense"
                     fullWidth
                     label="Board title"

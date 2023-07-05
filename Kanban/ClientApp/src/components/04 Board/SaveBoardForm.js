@@ -4,7 +4,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import useStateContext, { ContextProvider } from '../../hooks/useStateContext';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
 
-export default function SaveBoardForm({ formFunction }) {
+export default function SaveBoardForm({ formProps }) {
 
     const { context, setContext } = useStateContext();
 
@@ -31,7 +31,7 @@ export default function SaveBoardForm({ formFunction }) {
                     console.log(response);
                     setContext({
                     })
-                    formFunction()
+                    formProps.formFunction()
                 })
                 .catch(error => console.log(error))
         }
