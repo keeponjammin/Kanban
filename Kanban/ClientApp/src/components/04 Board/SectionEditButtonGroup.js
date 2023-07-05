@@ -8,6 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import ButtonDialog from '../01 General/ButtonDialog';
 import ButtonProperties from '../Functions/ButtonProperties';
+import AddSectionForm from './AddSectionForm';
 
 const SectionEditButtonGroup = ({ props }) => {
     const ParentFunctionProps = (option) => {
@@ -32,36 +33,35 @@ const SectionEditButtonGroup = ({ props }) => {
                 </IconButton>
                 <IconButton
                     onClick={() => props.parentFunction(
-                        ParentFunctionProps(props.boardModifyOptions.AddSectionLeft))
+                        ParentFunctionProps(props.boardModifyOptions.MoveSectionRight))
                     }>
-                    <AddIcon />
+                    <ChevronRightIcon />
                 </IconButton>
                 <IconButton
-                onClick={() => childRef.current.handleClickOpen(
-                    ButtonProperties(
-                        props.parentFunction,
-                        ParentFunctionProps(props.boardModifyOptions.RemoveSection),
-                        'Deleting section',
-                        'Are you sure you want to delete this section?'
+                    onClick={() => childRef.current.handleClickOpen(
+                        ButtonProperties(
+                            props.parentFunction,
+                            ParentFunctionProps(props.boardModifyOptions.RemoveSection),
+                            'Deleting section',
+                            'Are you sure you want to delete this section?'
                         )
                     )}
                 >
                     <DeleteForeverIcon />
                 </IconButton>
                 <IconButton
-                    onClick={() => props.parentFunction(
-                        ParentFunctionProps(props.boardModifyOptions.AddSectionRight))
-                    }>
+                    onClick={() => childRef.current.handleClickOpen({
+                        function: props.parentFunction,
+                        variables: props,
+                        title: 'Add Section',
+                        description: 'Fill in the following form to create a new section',
+                        form: <AddSectionForm />,
+                    })}
+                >
                     <AddIcon />
                 </IconButton>
-                <IconButton
-                    onClick={() => props.parentFunction(
-                        ParentFunctionProps(props.boardModifyOptions.MoveSectionRight))
-                    }>
-                    <ChevronRightIcon />
-                </IconButton>
             </ButtonGroup>
-            <ButtonDialog ref={childRef}/>
+            <ButtonDialog ref={childRef} />
         </Box>
     )
 }

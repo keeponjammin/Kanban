@@ -15,6 +15,7 @@ export default function Kanban() {
     const { context, setContext } = useStateContext();
     const [isLoaded, setIsLoaded] = useState(false);
     let [data, setBoardData] = useState(InitialData);
+
     useEffect(() => {
         createAPIEndpoint(ENDPOINTS.boardData)
             .fetchById(context.selectedBoardIndex)
@@ -25,7 +26,6 @@ export default function Kanban() {
             })
             .catch(error => { console.log(error); })
     }, []);
-
     const onDragEnd = result => {
         if (!result.destination) return
         const { source, destination } = result
@@ -47,7 +47,6 @@ export default function Kanban() {
             data[destinationColIndex].tasks = destinationTask
 
             setBoardData(data);
-            setContext({ data: data });
         }
     }
 
@@ -57,15 +56,17 @@ export default function Kanban() {
         MoveSectionLeft: "moveLeft",
         MoveSectionRight: "moveRight",
         RemoveSection: "removeSection",
-        AddSectionLeft: "addLeft",
-        AddSectionRight: "addRight",
+        AddSection: "addSection",
+        EditCard: "editCard"
     }
 
 
     const moveSection = (array, to, from) => {
-        const item = array[from];
-        array.splice(from, 1);
-        array.splice(to, 0, item);
+        if (to >= 0) {
+            const item = array[from];
+            array.splice(from, 1);
+            array.splice(to, 0, item);
+        }
         return array;
     };
 
@@ -77,47 +78,54 @@ export default function Kanban() {
         return index;
     }
     const updateBoard = (param) => {
-        let modified = false;
+        let newData = [...data];
         let index = getIndex(param?.parent?.id, param?.id);
         switch (param.option) {
             case BoardModifyOptions.AddCard:
-                //todo: replace with form data
-                let card =
-                {
+                let card = {
                     id: uuidv4(),
                     title: param.value,
                 };
-                data[index].tasks = [...[...data[index].tasks], card];
-                modified = true;
+                newData[index].tasks = [...[...newData[index].tasks], card];
                 break;
 
             case BoardModifyOptions.RemoveCard:
-                data[index].tasks = [...data[index].tasks]
+                newData[index].tasks = [...newData[index].tasks]
                     .filter(x => x.id !== param.id);
-                modified = true;
 
                 break;
 
             case BoardModifyOptions.MoveSectionLeft:
-                moveSection(data, index - 1, index);
-                modified = true;
+                moveSection(newData, index - 1, index);
                 break;
 
             case BoardModifyOptions.MoveSectionRight:
-                moveSection(data, index + 1, index);
-                modified = true;
+                moveSection(newData, index + 1, index);
                 break;
 
             case BoardModifyOptions.RemoveSection:
-                data = [...data].filter(x => x.id !== param.id);
-                modified = true;
+                newData = [...newData].filter(x => x.id !== param.id);
+                break;
+
+            case BoardModifyOptions.AddSection:
+                let section = {
+                    id: uuidv4(),
+                    title: param.value,
+                    tasks: [],
+                };
+                newData = [...newData, section]
+                break;
+
+            case BoardModifyOptions.EditCard:
+                let parentIndex = newData.findIndex(e => e.id === param?.parent);
+                let childIndex = newData[parentIndex].tasks.findIndex(e => e.id ===param?.id);
+                newData[parentIndex].tasks[childIndex].title = param.value;
                 break;
             default:
                 console.log('not implemented');
         }
-        if (modified) {
-            setContext({ data: data });
-            setBoardData(data);
+        if (data !== newData) {
+            setBoardData(newData);
         }
     }
 
@@ -197,6 +205,7 @@ export default function Kanban() {
                 }
             </Grid>
         </DragDropContext>
+
 
     )
 

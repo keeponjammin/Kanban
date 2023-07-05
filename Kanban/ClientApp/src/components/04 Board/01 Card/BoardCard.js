@@ -4,22 +4,35 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import ButtonDialog from '../../01 General/ButtonDialog';
 import ButtonProperties from '../../Functions/ButtonProperties';
+import EditIcon from '@mui/icons-material/Edit';
+import EditCardForm from './EditCardForm';
 
 const BoardCard = ({ props }) => {
   const ParentFunctionProps = (option) => {
     return {
-        option: option,
-        id: props.component.id,
-        parent: props.parent ?? null,
+      option: option,
+      id: props.component.id,
+      parent: props.parent ?? null,
     }
-}
+  }
   const childRef = useRef();
   return (
     <><Card
       sx={{ m: 1 }}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h6" component="div">
           {props.component.title}
+          <IconButton
+            onClick={() => childRef.current.handleClickOpen({
+                function: props.parentFunction,
+                variables: props,
+                title: 'Edit card',
+                description: 'Edit card',
+                form: <EditCardForm />,
+            })}
+        >
+          <EditIcon />
+        </IconButton>
         </Typography>
       </CardContent>
       <CardActions>

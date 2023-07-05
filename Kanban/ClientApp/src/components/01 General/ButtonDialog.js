@@ -22,7 +22,7 @@ const ButtonDialog = forwardRef(({ props }, ref) => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    //console.log(buttonProps);
     const formProps = {
         formFunction: handleClose,
         additionalFunction: buttonProps.function,

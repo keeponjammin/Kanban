@@ -27,8 +27,7 @@ export default function SaveBoardForm({ formProps }) {
         if (validate()) {
             createAPIEndpoint(ENDPOINTS.boardData)
                 .put(boardData().boardDataId, boardData().boardData)
-                .then(response => {
-                    console.log(response);
+                .then(() => {
                     setContext({
                     })
                     formProps.formFunction()
