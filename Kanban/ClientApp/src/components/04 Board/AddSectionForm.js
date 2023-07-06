@@ -14,7 +14,6 @@ export default function AddSectionForm({ formProps }) {
 
   const addSection = () => {
     const { additionalFunction, additionalFunctionVariables } = formProps;
-    console.log(formProps);
     formProps.function({
       option: formProps.variables.boardModifyOptions.AddSection,
       value: inputText,

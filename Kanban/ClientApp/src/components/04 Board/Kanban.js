@@ -25,7 +25,6 @@ export default function Kanban() {
             .then(response => {
                 setContext({ boardDataIndex: response.data.boardDataId });
                 setBoardData(JSON.parse(response.data.data));
-                console.log(context);
                 setIsLoaded(true);
             })
             .catch(error => { console.log(error); })
