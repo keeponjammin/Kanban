@@ -20,18 +20,6 @@ namespace Kanban.Controllers
             _context = context;
         }
 
-        // GET: api/BoardDatas
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BoardData>>> GetBoardData()
-        {
-          if (_context.BoardData == null)
-          {
-              return NotFound();
-          }
-            return await _context.BoardData.ToListAsync();
-        }
-
-        // GET: api/BoardDatas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BoardData>> GetBoardData(int id)
         {
@@ -94,26 +82,6 @@ namespace Kanban.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBoardData", new { id = boardData.BoardId }, boardData);
-        }
-
-        // DELETE: api/BoardDatas/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBoardData(int id)
-        {
-            if (_context.BoardData == null)
-            {
-                return NotFound();
-            }
-            var boardData = await _context.BoardData.FindAsync(id);
-            if (boardData == null)
-            {
-                return NotFound();
-            }
-
-            _context.BoardData.Remove(boardData);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool BoardDataExists(int id)

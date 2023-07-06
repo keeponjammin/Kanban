@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 export default function EditCardForm({ formProps }) {
 
-    const [inputText, setInputText] = useState("");
+    const [inputText, setInputText] = useState('');
 
     const handleFunction = () => {
         formProps.formFunction();
@@ -13,11 +13,13 @@ export default function EditCardForm({ formProps }) {
     };
     const editCard = () => {
         formProps.formFunction();
-        
-        formProps.additionalFunction({
-            option: formProps.additionalFunctionVariables.boardModifyOptions.EditCard,
-            id: formProps.additionalFunctionVariables.component.id,
-            parent: formProps.additionalFunctionVariables?.parent?.id,
+        const { variables, function: formFunction } = formProps;
+        const { boardModifyOptions, component, parent } = variables;
+
+        formFunction({
+            option: boardModifyOptions.EditCard,
+            id: component.id,
+            parent: parent?.id,
             value: inputText,
         });
     }
@@ -31,7 +33,7 @@ export default function EditCardForm({ formProps }) {
                 fullWidth
                 variant="standard"
                 onChange={handleChange}
-                defaultValue={formProps.additionalFunctionVariables.component.title}
+                defaultValue={formProps.variables.component.title}
             />
         </DialogContent><DialogActions>
                 <Button onClick={editCard}>Edit Card</Button>

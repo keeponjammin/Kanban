@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useStateContext from '../../hooks/useStateContext'
 import { Grid } from '@mui/material';
 import { ENDPOINTS, createAPIEndpoint } from '../../api';
@@ -19,23 +19,27 @@ import ButtonDialog from '../01 General/ButtonDialog';
 
 export default function OverviewGrid() {
     const {context, setContext} = useStateContext();
-    const navigate = useNavigate();
     const childRef = useRef();
+    const navigate = useNavigate();
+    const [boards, setBoards] = useState([]);
 
     function removeBoard(index){
       createAPIEndpoint(ENDPOINTS.boards)
         .delete(index)
-        .then(response => {
-            setContext({ 
-                boards : context.boards.filter(x => x.boardId !== index),
-            })
+        .then(() => {
+            setBoards([...boards].filter(x => x.boardId !== index))
             childRef.current.handleClose();
         })
         .catch(error => console.log(error))
     }
 
-    function openBoard(index){
-      setContext({selectedBoardIndex: index,})
+    function openBoard(boardProperties){
+      console.log(boardProperties);
+      setContext({
+        selectedBoardIndex: boardProperties.boardId,
+        selectedBoardTitle: boardProperties.boardTitle,
+        selectedBoardDescription: boardProperties.boardDescription
+      })
       navigate('/board')
     }
 
@@ -43,13 +47,13 @@ export default function OverviewGrid() {
       createAPIEndpoint(ENDPOINTS.boards)
       .fetch()
       .then(response =>{
-        setContext({boards: response.data})
+        setBoards(response.data)
       })
       .catch(error =>{console.log(error);})
-    }, []);
+    }, [context.createdBoards]);
 
     return (
-      context.boards.length !== 0
+      boards.length !== 0
       ?
       <Grid container 
       spacing={{ xs: 2, md: 3 }} 
@@ -59,7 +63,7 @@ export default function OverviewGrid() {
       alignItems="center"
       >
 
-        {context.boards.map((boardProperties, index) =>
+        {boards.map((boardProperties, index) =>
           (
             <Grid item key={index}>
               <Card sx={{ maxWidth: 345, minWidth: 200 }}>
@@ -78,7 +82,7 @@ export default function OverviewGrid() {
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
+                <Button size="small" onClick={() => openBoard(boardProperties)}>Open</Button>
                 <IconButton aria-label="Delete forever" 
                   onClick={() => childRef.current.handleClickOpen(
                     ButtonProperties(
