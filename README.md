@@ -76,4 +76,4 @@ The API endpoints of the application are documented using Swagger. To access the
 
 ## License
 
-This project is licensed under the [Creative Commons Zero v1.0 Universal License](LICENSE).
+This project is licensed under the Creative Commons Zero v1.0 Universal License.
