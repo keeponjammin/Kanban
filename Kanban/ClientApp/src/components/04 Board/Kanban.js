@@ -25,6 +25,7 @@ export default function Kanban() {
             .then(response => {
                 setContext({ boardDataIndex: response.data.boardDataId });
                 setBoardData(JSON.parse(response.data.data));
+                console.log(context);
                 setIsLoaded(true);
             })
             .catch(error => { console.log(error); })
@@ -73,72 +74,77 @@ export default function Kanban() {
     }
     return (
 
-        <><DragDropContext onDragEnd={onDragEnd}>
-            <Grid container
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 4, sm: 8, md: 12 }}
-                direction="row"
-                justifyContent="center"
-                alignItems="stretch"
-            >
-                {data.map(section => (
-                    <Droppable
-                        key={section.id}
-                        droppableId={section.id}
-                    >
-                        {(provided) => (
-                            <Grid item
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                                sx={{ minWidth: '250px' }}
-                            >
-                                <SectionEditButtonGroup props={getUpdateBoardProps(section, null)} />
-                                <Typography gutterBottom variant="h5" component="div">
-                                    <Box sx={{ textAlign: 'center', m: 1 }}>
-                                        {section.title}
-                                    </Box>
-                                </Typography>
-                                <div>
-                                    {section.tasks.map((task, index) => (
-                                        <Draggable
-                                            key={task.id}
-                                            draggableId={task.id}
-                                            index={index}
-                                        >
-                                            {(provided, snapshot) => (
-                                                <div
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    style={{
-                                                        ...provided.draggableProps.style,
-                                                        opacity: snapshot.isDragging ? '0.5' : '1'
-                                                    }}
-                                                >
+        <>
+            <Typography variant="h2">
+                <Box sx={{ textAlign: 'center', m: 1 }}>{context.selectedBoardTitle}</Box>
+                <Box sx={{ textAlign: 'center', m: 1 }}>{context.selectedBoardDescription}</Box>
+            </Typography>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Grid container
+                    spacing={{ xs: 2, md: 3 }}
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="stretch"
+                >
+                    {data.map(section => (
+                        <Droppable
+                            key={section.id}
+                            droppableId={section.id}
+                        >
+                            {(provided) => (
+                                <Grid item
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    sx={{ minWidth: '250px' }}
+                                >
+                                    <SectionEditButtonGroup props={getUpdateBoardProps(section, null)} />
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        <Box sx={{ textAlign: 'center', m: 1 }}>
+                                            {section.title}
+                                        </Box>
+                                    </Typography>
+                                    <div>
+                                        {section.tasks.map((task, index) => (
+                                            <Draggable
+                                                key={task.id}
+                                                draggableId={task.id}
+                                                index={index}
+                                            >
+                                                {(provided, snapshot) => (
+                                                    <div
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        style={{
+                                                            ...provided.draggableProps.style,
+                                                            opacity: snapshot.isDragging ? '0.5' : '1'
+                                                        }}
+                                                    >
 
-                                                    <BoardCard props={getUpdateBoardProps(task, section)}>
-                                                    </BoardCard>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                                <AddCardButton props={getUpdateBoardProps(section, null)} />
-                            </Grid>
-                        )}
+                                                        <BoardCard props={getUpdateBoardProps(task, section)}>
+                                                        </BoardCard>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                    <AddCardButton props={getUpdateBoardProps(section, null)} />
+                                </Grid>
+                            )}
 
-                    </Droppable>
-                ))}
-            </Grid>
-        </DragDropContext><DialogActionButton props={{
-            title: 'Save board',
-            description: 'Are you sure you wish to save?',
-            color: 'primary',
-            icon: <SaveIcon sx={{ mr: 1 }} />,
-            form: <SaveBoardForm />,
-            data: data,
-        }} /></>
+                        </Droppable>
+                    ))}
+                </Grid>
+            </DragDropContext><DialogActionButton props={{
+                title: 'Save board',
+                description: 'Are you sure you wish to save?',
+                color: 'primary',
+                icon: <SaveIcon sx={{ mr: 1 }} />,
+                form: <SaveBoardForm />,
+                data: data,
+            }} /></>
 
 
     )

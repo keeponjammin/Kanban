@@ -8,6 +8,8 @@ const getFreshContext =()=>{
         localStorage.setItem('context', JSON.stringify({
             boardDataIndex: -1,
             selectedBoardIndex: -1,
+            selectedBoardTitle: '',
+            selectedBoardDescription: '',
             userId:-1,
             userName:'',
             createdBoards: 0,

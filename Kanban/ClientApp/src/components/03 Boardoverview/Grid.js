@@ -33,8 +33,13 @@ export default function OverviewGrid() {
         .catch(error => console.log(error))
     }
 
-    function openBoard(index){
-      setContext({selectedBoardIndex: index,})
+    function openBoard(boardProperties){
+      console.log(boardProperties);
+      setContext({
+        selectedBoardIndex: boardProperties.boardId,
+        selectedBoardTitle: boardProperties.boardTitle,
+        selectedBoardDescription: boardProperties.boardDescription
+      })
       navigate('/board')
     }
 
@@ -45,7 +50,7 @@ export default function OverviewGrid() {
         setBoards(response.data)
       })
       .catch(error =>{console.log(error);})
-    }, [context.amountOfBoards]);
+    }, [context.createdBoards]);
 
     return (
       boards.length !== 0
@@ -77,7 +82,7 @@ export default function OverviewGrid() {
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                <Button size="small" onClick={() => openBoard(boardProperties.boardId)}>Open</Button>
+                <Button size="small" onClick={() => openBoard(boardProperties)}>Open</Button>
                 <IconButton aria-label="Delete forever" 
                   onClick={() => childRef.current.handleClickOpen(
                     ButtonProperties(

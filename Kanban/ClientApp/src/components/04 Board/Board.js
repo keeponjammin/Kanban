@@ -1,11 +1,7 @@
 import React, { Suspense } from 'react';
-import { Box, Typography } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
 import useStateContext from '../../hooks/useStateContext';
 import ReturnButton from './ReturnButton';
-import SaveBoardForm from './SaveBoardForm';
 import LoadingOverlay from '../01 General/LoadingOverlay';
-import DialogActionButton from '../01 General/DialogActionButton';
 
 const Board = () => {
   const { context } = useStateContext();
@@ -19,9 +15,6 @@ const Board = () => {
   return (
     <>
       <ReturnButton props={returnButtonProps} />
-      <Typography variant="h1">
-        <Box sx={{ textAlign: 'center', m: 1 }}>Board {context.selectedBoardIndex}</Box>
-      </Typography>
       <Suspense fallback={<LoadingOverlay />}>
         <Kanban />
       </Suspense>
